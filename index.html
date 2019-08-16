@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font_awesome/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <title>Bank Search</title>
+  </head>
+  <body ng-app="myApp" ng-controller="myCtrl">
+    <div class="container">
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand">BANK BRANCHES</a>
+            <form class="form-inline">
+                <button class="btn btn-outline-danger my-2 my-sm-0" ng-click="showFav = !showFav"><i class="fas fa-heart"></i> {{!showFav?"SHOW FAVOURITES":"SHOW ALL"}}</button>
+            </form>
+        </nav><br><br>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{defaultCity}}</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" ng-click="changeCity('Mumbai')">Mumbai</a>
+                            <a class="dropdown-item" ng-click="changeCity('Bangalore')">Bangalore</a>
+                            <a class="dropdown-item" ng-click="changeCity('Delhi')">Delhi</a>
+                            <a class="dropdown-item" ng-click="changeCity('Jamshedpur')">Jamshedpur</a>
+                            <a class="dropdown-item" ng-click="changeCity('Goa')">Goa</a>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Search any keyword" ng-model = "key" >
+                </div>         
+            </div>
+        </div>
+    <br><small>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                <a class="page-link" ng-click="pagination(currentPage - 9)" ng-if="currentPage > 0" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" ng-click="pagination(0)">1</a></li>
+                <li class="page-item"><a class="page-link" ng-click="pagination(9)">2</a></li>
+                <li class="page-item"><a class="page-link" ng-click="pagination(18)">3</a></li>
+                <li class="page-item">
+                <a class="page-link" ng-click="pagination(currentPage + 9)" ng-if="currentPage < searchResponse.length">Next</a>
+                </li>
+            </ul>
+        </nav>
+    <div class="table-responsive" ng-cloak>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"><i class="fas fa-heart"></i></th>
+                    <th scope="col">IFSC</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">BRANCH</th>
+                    <th scope="col">ADDRESS</th>
+                    <th scope="col">CITY</th>
+                    <th scope="col">DISTRICT</th>
+                    <th scope="col">STATE</th>
+                    <th scope="col">BANK NAME</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="details in searchResponse | limitTo : currentPage + 9 | filter : key" ng-if="$index > currentPage && !showFav">
+                    <th><a ng-click="setFav(details,$index)"><i class="far fa-heart"  ng-class="details.fav" ></i></a></th>
+                    <th scope="row">{{details.ifsc}}</th>
+                    <td>{{details.bank_id}}</td>
+                    <td>{{details.branch}}</td>
+                    <td>{{details.address}}</td>
+                    <td>{{details.city}}</td>
+                    <td>{{details.district}}</td>
+                    <td>{{details.state}}</td>
+                    <td><a href="#{{details.bank_id}}">{{details.bank_name}}</a></td>
+                </tr>
+                <tr ng-repeat="details in searchResponse | limitTo : currentPage + 9" ng-if="$index > currentPage && showFav && details.fav=='red'">
+                    <th><a ng-click="setFav(details,$index)"><i class="far fa-heart"  ng-class="details.fav" ></i></a></th>
+                    <th scope="row">{{details.ifsc}}</th>
+                    <td>{{details.bank_id}}</td>
+                    <td>{{details.branch}}</td>
+                    <td>{{details.address}}</td>
+                    <td>{{details.city}}</td>
+                    <td>{{details.district}}</td>
+                    <td>{{details.state}}</td>
+                    <td>{{details.bank_name}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div></small>
+</div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/angular.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/index.js"></script>
+  </body>
+</html>
