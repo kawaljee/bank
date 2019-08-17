@@ -35,7 +35,7 @@
             </div>
         </div>
     <br><small>
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation example" ng-if="!showFav">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
                 <a class="page-link" ng-click="pagination(currentPage - _valPage)" ng-if="currentPage > 0" tabindex="-1">Previous</a>
@@ -76,7 +76,7 @@
                     <td>{{details.state}}</td>
                     <td><a href="#{{details.bank_id}}">{{details.bank_name}}</a></td>
                 </tr>
-                <tr ng-repeat="details in searchResponse | limitTo : currentPage + 9" ng-if="$index > currentPage && showFav && details.fav=='red'">
+                <tr ng-repeat="details in searchResponse" ng-if=" showFav && details.fav=='red'">
                     <th><a ng-click="setFav(details,$index)"><i class="far fa-heart"  ng-class="details.fav" ></i></a></th>
                     <th scope="row">{{details.ifsc}}</th>
                     <td>{{details.bank_id}}</td>
