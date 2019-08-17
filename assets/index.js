@@ -5,6 +5,7 @@ app.controller("myCtrl",function($scope,$http){
     $scope.searchResponse = [];                                 //for displaying response
     $scope.searchResp = [];  
     $scope.showFav = false;                                   //for recording response
+    $scope._valPage = 9;
     $scope.favArr = {
                         'DELHI':{indexes:[],data:[]},           // {
                         'MUMBAI':{indexes:[],data:[]},          //      for recording user's fav

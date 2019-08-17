@@ -38,14 +38,15 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                <a class="page-link" ng-click="pagination(currentPage - 9)" ng-if="currentPage > 0" tabindex="-1">Previous</a>
+                <a class="page-link" ng-click="pagination(currentPage - _valPage)" ng-if="currentPage > 0" tabindex="-1">Previous</a>
                 </li>
                 <li class="page-item"><a class="page-link" ng-click="pagination(0)">1</a></li>
-                <li class="page-item"><a class="page-link" ng-click="pagination(9)">2</a></li>
-                <li class="page-item"><a class="page-link" ng-click="pagination(18)">3</a></li>
+                <li class="page-item"><a class="page-link" ng-click="pagination(_valPage)">2</a></li>
+                <li class="page-item"><a class="page-link" ng-click="pagination(2*_valPage)">3</a></li>
                 <li class="page-item">
-                <a class="page-link" ng-click="pagination(currentPage + 9)" ng-if="currentPage < searchResponse.length">Next</a>
-                </li>
+                <a class="page-link" ng-click="pagination(currentPage + _valPage)" ng-if="currentPage < searchResponse.length">Next</a>
+                </li><li class="page-item">
+                <input type="number" ng-model="_valPage"  style="width:50px;height:33px;"> PAGE SIZE</li>
             </ul>
         </nav>
     <div class="table-responsive" ng-cloak>
@@ -64,7 +65,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="details in searchResponse | limitTo : currentPage + 9 | filter : key" ng-if="$index > currentPage && !showFav">
+                <tr ng-repeat="details in searchResponse | limitTo : currentPage + _valPage + 1 | filter : key" ng-if="$index > currentPage && !showFav">
                     <th><a ng-click="setFav(details,$index)"><i class="far fa-heart"  ng-class="details.fav" ></i></a></th>
                     <th scope="row">{{details.ifsc}}</th>
                     <td>{{details.bank_id}}</td>
