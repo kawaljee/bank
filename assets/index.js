@@ -1,22 +1,26 @@
 let app = angular.module("myApp",[]);
 app.controller("myCtrl",function($scope,$http){
-    $scope.defaultCity ="Delhi";                                //for drop down
+
+    $scope.defaultCity ="DELHI";                                //for drop down
     $scope.currentPage = 0;                                     //for pagination
     $scope.searchResponse = [];                                 //for displaying response
-    $scope.searchResp = [];  
-    $scope.showFav = false;                                   //for recording response
-    $scope._valPage = 9;
+    $scope.searchResp = [];                                     //for recording response
+    $scope.showFav = false;                                     //boolean fav toggler
+    $scope._valPage = 9;                                        //page size
     $scope.favArr = {
-                        'DELHI':{indexes:[],data:[]},           // {
-                        'MUMBAI':{indexes:[],data:[]},          //      for recording user's fav
-                        'BANGALORE':{indexes:[],data:[]},       //      banks
-                        'GOA':{indexes:[],data:[]},             //
-                        'JAMSHEDPUR':{indexes:[],data:[]}       // }
+                        "DELHI":{indexes:[],data:[]},           // {
+                        "MUMBAI":{indexes:[],data:[]},          //      for recording user's fav
+                        "BANGALORE":{indexes:[],data:[]},       //      banks
+                        "GOA":{indexes:[],data:[]},             //
+                        "JAMSHEDPUR":{indexes:[],data:[]}       // }
                     };
+    $scope._pageSize = function(_size){                         // {
+        $scope._valPage = _size;                                //      for pagesize
+    }                                                           // }
     if(localStorage.getItem("favArr")){
-        $scope.favArr = JSON.parse(localStorage.getItem("favArr"));     //localStorage
+        $scope.favArr = JSON.parse(localStorage.getItem("favArr"));     //localStorage (cache)
     }
-    $scope.allCities = ['DELHI','MUMBAI','BANGALORE','GOA','JAMSHEDPUR'];
+    $scope.allCities = ["DELHI","MUMBAI","BANGALORE","GOA","JAMSHEDPUR"];   //default cities
     $scope.changeCity = function(city){                 //if city change
             $scope.defaultCity = city;
             $scope.searchResult($scope.defaultCity);
@@ -24,19 +28,19 @@ app.controller("myCtrl",function($scope,$http){
     
     $scope.setFav = function(obj,indx){                          // setting up fav.
         $scope.newObj = obj;
-        if($scope.searchResponse[indx].fav == "red"){
+        if($scope.searchResponse[indx].fav == "red"){            // toggle fav
             $scope.searchResponse[indx].fav = "";
             $scope.searchResp[indx].fav = "";
-            $scope.favArr[$scope.defaultCity.toUpperCase()].indexes = 
-                        $scope.favArr[$scope.defaultCity.toUpperCase()].indexes.filter((_val)=>(_val !== indx))
+            $scope.favArr[$scope.defaultCity].indexes = 
+                        $scope.favArr[$scope.defaultCity].indexes.filter((_val)=>(_val !== indx))
         }
         else{
             $scope.searchResponse[indx].fav = "red";
             $scope.searchResp[indx].fav = "red";
-            $scope.favArr[$scope.defaultCity.toUpperCase()].indexes.push(indx);
+            $scope.favArr[$scope.defaultCity].indexes.push(indx);
         }
-        $scope.favArr[$scope.defaultCity.toUpperCase()].data = $scope.searchResponse.filter(function(_obj){
-                if(_obj.city==$scope.defaultCity.toUpperCase())
+        $scope.favArr[$scope.defaultCity].data = $scope.searchResponse.filter(function(_obj){
+                if(_obj.city==$scope.defaultCity)
                     if(_obj.fav == "red")
                         return true;
         });
@@ -51,7 +55,7 @@ app.controller("myCtrl",function($scope,$http){
                 $scope.searchResponse[indx].fav = $scope.searchResp[indx].fav = "";
             }
             angular.forEach($scope.allCities, function(_city){
-                if($scope.defaultCity.toUpperCase() == _city){
+                if($scope.defaultCity == _city){
                     $scope.favArr[_city].indexes.forEach(function(_val){
                         $scope.searchResponse[_val].fav = $scope.searchResp[_val].fav = "red";
                     })

@@ -23,11 +23,7 @@
                     <div class="input-group-prepend">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{defaultCity}}</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" ng-click="changeCity('Mumbai')">Mumbai</a>
-                            <a class="dropdown-item" ng-click="changeCity('Bangalore')">Bangalore</a>
-                            <a class="dropdown-item" ng-click="changeCity('Delhi')">Delhi</a>
-                            <a class="dropdown-item" ng-click="changeCity('Jamshedpur')">Jamshedpur</a>
-                            <a class="dropdown-item" ng-click="changeCity('Goa')">Goa</a>
+                            <a class="dropdown-item" ng-repeat="_city in allCities" ng-click="changeCity(_city)">{{_city}}</a>
                         </div>
                     </div>
                     <input type="text" class="form-control" placeholder="Search any keyword" ng-model = "key" >
@@ -46,7 +42,7 @@
                 <li class="page-item">
                 <a class="page-link" ng-click="pagination(currentPage + _valPage)" ng-if="currentPage < searchResponse.length">Next</a>
                 </li><li class="page-item">
-                <input type="number" ng-model="_valPage"  style="width:50px;height:33px;"> PAGE SIZE</li>
+                <input type="number" ng-model="_valPage" style="width:50px;height:33px;" ng-change="_pageSize(_valPage)"> PAGE SIZE</li>
             </ul>
         </nav>
     <div class="table-responsive" ng-cloak>
