@@ -1,0 +1,22 @@
+{
+  "name": "bank",
+  "version": "0.0.1",
+  "description": "Bank details",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kawaljee/bank.git"
+  },
+  "keywords": [
+    "bank_key"
+  ],
+  "author": "Kawaljeet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kawaljee/bank/issues"
+  },
+  "homepage": "https://github.com/kawaljee/bank#readme"
+}
